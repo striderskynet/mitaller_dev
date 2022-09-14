@@ -1,0 +1,174 @@
+<section class="content">
+  <section class="content-fluid">
+    <h5 class="mb-2 mt-0 pt-3">Analytics</h5>
+    <div class="row">
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-info">
+          <div class="inner">
+            <h3>150</h3>
+            <p>New Tasks</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-list"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-success">
+          <div class="inner">
+            <h3>70<sup style="font-size: 20px">%</sup></h3>
+            <p>Completion Rate</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-bars"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-warning">
+          <div class="inner">
+            <h3>44</h3>
+            <p>New Clients</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-user-plus"></i>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-lg-3 col-6">
+        <div class="small-box bg-primary">
+          <div class="inner">
+            <h3>65</h3>
+            <p>Ventas</p>
+          </div>
+          <div class="icon">
+            <i class="fas fa-cart-plus"></i>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-fluid">
+      <div class="row">
+        <div class="col-md-6">
+          <div class="card card-primary">
+            <div class="card-header">
+              <h3 class="card-title">Task Types</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+              <div id="chart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px" width="764" height="250" class="chartjs-render-monitor"></div>
+              <script>
+                var options = {
+                  series: [51, 82, 50, 13, 25],
+                  chart: {
+                    type: "donut",
+                  },
+                  labels: ["Paid", "Completed", "Pending", "Cancelled", "Registered"],
+                  stroke: {
+                    colors: ["#fff"],
+                  },
+                  fill: {
+                    opacity: 0.8,
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: "bottom",
+                        },
+                      },
+                    },
+                  ],
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart2"), options);
+                chart.render();
+              </script>
+            </div>
+          </div>
+        </div>
+        <div class="col-md-6">
+          <div class="card card-secondary">
+            <div class="card-header">
+              <h3 class="card-title">Inventory types</h3>
+              <div class="card-tools">
+                <button type="button" class="btn btn-tool" data-card-widget="collapse">
+                  <i class="fas fa-minus"></i>
+                </button>
+                <button type="button" class="btn btn-tool" data-card-widget="remove">
+                  <i class="fas fa-times"></i>
+                </button>
+              </div>
+            </div>
+
+            <div class="card-body">
+              <div class="chartjs-size-monitor">
+                <div class="chartjs-size-monitor-expand">
+                  <div class=""></div>
+                </div>
+                <div class="chartjs-size-monitor-shrink">
+                  <div class=""></div>
+                </div>
+              </div>
+
+              <div id="chart" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px" width="764" height="250" class="chartjs-render-monitor"></div>
+              <script>
+                var options = {
+                  series: [14, 23, 21, 17, 15, 10, 12, 17, 21],
+                  chart: {
+                    type: "polarArea",
+                  },
+                  stroke: {
+                    colors: ["#fff"],
+                  },
+                  fill: {
+                    opacity: 0.8,
+                  },
+                  responsive: [
+                    {
+                      breakpoint: 480,
+                      options: {
+                        chart: {
+                          width: 200,
+                        },
+                        legend: {
+                          position: "bottom",
+                        },
+                      },
+                    },
+                  ],
+                };
+
+                var chart = new ApexCharts(document.querySelector("#chart"), options);
+                chart.render();
+              </script>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>

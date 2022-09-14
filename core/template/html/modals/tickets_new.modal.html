@@ -1,0 +1,314 @@
+<div class="modal fade" id="ticketsmodal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-xl">
+    <div class="modal-content login-card-body pb-0">
+      <div class="modal-header">
+        <h4 class="modal-title">Create New Ticket</h4><span class="ms-3 text-danger" id="tickets_code_txt"></span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="tickets_form" class="col s12">
+          <input type="hidden" id="tickets_code" data-name="tickets_code" name="tickets_code" value="">
+          <div class="row">
+            <div class="col-md-12 col-lg-6" data-name="clients"></div>
+            <div class="col-md-12 col-lg-6" data-name="tickets_category"></div>
+            <div class="col-md-12 col-lg-6" data-name="tickets_assigned_user"></div>
+            <div class="col-md-12 col-lg-6" data-name="device_brand"></div>
+            <div class="col-md-12 col-lg-6" data-name="repair_defect"></div>
+            <div class="col-md-12 col-lg-6" data-name="device_model"></div>
+            <div class="col-md-12 col-lg-6" data-name="repair_reason"></div>
+            <div class="col-md-12 col-lg-6" data-name="device_serial"></div>
+            <div class="col-md-12 col-lg-6" data-name="tickets_close_date"></div>
+            <div class="col-md-12 col-lg-6" data-name="device_password"></div>
+            <div class="col-md-12 col-lg-6" data-name="tickets_warranty">
+              <select tabindex="6" name="tickets_warranty" id="tickets_warranty" class="selectized" placeholder="Non Existant">
+                  <option>None</option>
+                  <option>Today</option>
+                  <option>Tomorrow</option>
+                  <option>A Week</option>
+                  <option>15 Days</option>
+                  <option>A Month</option>
+              </select>
+            </div>
+            <div class="col-md-12 col-lg-6 text-center" data-name="">
+              <div class="custom-control custom-switch">
+                <div style="display: inline-block; width: 200px; ">
+                  <input tabindex="12" type="checkbox" name="update_sms" class="custom-control-input" id="customSwitch2">
+                  <label class="custom-control-label" for="customSwitch2">Send SMS</label>
+                </div>
+                <div style="display: inline-block">
+                  <input tabindex="13" type="checkbox" name="update_email" class="custom-control-input" id="customSwitch3">
+                  <label class="custom-control-label" for="customSwitch3">Send EMAIL</label>
+                </div>
+              </div>
+            </div>
+            <hr class="mt-3 mb=0" />
+            <h4 class="mt-0">Info</h4>
+            <div class="col-md-12 col-lg-6" data-name="tickets_observations"></div>
+            <div class="col-md-12 col-lg-6" data-name="tickets_comments"></div>
+            </div>
+      <div class="modal-footer">
+        <label class="control-label" for="tickets_status">Ticket Status</label>
+        <select tabindex="16" name="tickets_status" id="tickets_status" class="selectized" placeholder="Status"></select>
+      <div class="vr"></div>
+        <button tabindex="17" type="submit" class="mb-0 btn btn-primary" style="margin-top: -1px">Create ticket</button>
+      </div>
+    </div>
+  </form>
+  </div>
+</div>
+</div>
+
+<script>
+
+  const genRand = (len) => {
+    return Math.random().toString(36).substring(2,len+2);
+  }
+
+ //console.log(genRand(8));
+
+
+  let tickets_form = {
+    clients: { tab: 1, type:"select", name: "Clients", validate: true, required: true, icon: 'fa-user'},
+    tickets_code: { tab: -1, type:"hidden", name: "Category", validate: true, required: true, icon: 'fa-folder', hide: true},
+    tickets_category: { tab: 7, type:"select", name: "Category", validate: true, required: true, icon: 'fa-folder'},
+    tickets_assigned_user: { tab: 2, type:"select", name: "Assigned to:", required: true, icon: 'fa-user'},
+    device_brand: { tab: 8, type:"text", name: "Manufacturer", required: false, icon: 'fa-link'},
+    repair_reason: { tab: 4, type:"text", name: "Reason", required: false, icon: 'fa-link'},
+    device_model: { tab: 9, type:"text", name: "Model", required: false, icon: 'fa-link'},
+    repair_defect: { tab: 3, type:"text", name: "Defect", required: true, icon: 'fa-link'},
+    device_serial: { tab: 10, type:"text", name: "Serial", required: false, icon: 'fa-hashtag'},
+    tickets_close_date: { tab: 5, type:"datetime", name: "Close Date", required: false, icon: 'fa-calendar'},
+    device_password: { tab: 11, type:"text", name: "Device Password", required: false, icon: 'fa-asterisk', auto: "device-password"},
+    tickets_warranty: { tab: 5, type:"select", name: "Warranty", value: "Non Existant",  required: true, hide: true},
+    tickets_observations: { tab: 14, type:"textarea", name: "Observations", value: "",  required: false, icon: 'fa-list'},
+    tickets_comments: { tab: 15, type:"textarea", name: "Comments", value: "",  required: false, icon: 'fa-comments'},
+    update_sms: { tab: 12, type:"checkbox", name: "Send SMS", value: "",  required: false, hide: true},
+    update_email: { tab: 13, type:"checkbox", name: "Send EMAIL", value: "",  required: false, hide: true},
+    tickets_warranty: { tab: 6, type:"select", name: "Warranty", value: "Non Existant",  required: true, hide: true},
+    tickets_status: { tab: 16, type:"select", name: "Ticket Status", value: "",  required: true, hide: true},
+  }
+
+
+
+  function create_form(form_id, form_data){
+    let main_form = $("#tickets_form");
+    let tickets_code = genRand(6).toUpperCase();
+    $("#tickets_code_txt").html(tickets_code);
+    $("#tickets_code").val(tickets_code);
+
+
+    for (let key in form_data) {
+
+    input = main_form.find("[data-name='" + key + "']");
+   
+    let value = "";
+    let autocomplete = "";
+    
+    if (typeof form_data[key].value !== 'undefined') {
+      value = form_data[key].value;
+    } 
+
+    if (typeof form_data[key].auto !== 'undefined') {
+      autocomplete = form_data[key].auto;
+    } 
+
+    if ( form_data[key].hide != true )
+    {    
+      if (form_data[key].required == true)
+        required = "required";
+      else 
+      required = "";
+
+
+      switch (form_data[key].type){
+        default:  input.html("<div class=\"input-group mb-3\">" +
+        //`<label for=\"${key}\">${form_data[key].name}</label>` + 
+        `<input tabindex="${form_data[key].tab}" name=\"${key}\" type=\"${form_data[key].type}\" autocomplete=\"${autocomplete}\" class=\"form-control\" placeholder=\"${form_data[key].name}\" ${required}/>` +
+        " <div class=\"input-group-append\">" +
+        "   <div class=\"input-group-text\">" +
+        `     <span class=\"fas ${form_data[key].icon}\"></span>` +
+        "   </div>" +
+        " </div>" +
+        "</div>");
+          //console.log(input.html());
+        break;
+
+        case "textarea":
+        input.html("<div class=\"input-group mb-3\">" +
+        `<textarea tabindex="${form_data[key].tab}" rows=\"4\" style=\"resize: none;\" name=\"${key}\" autocomplete=\"${autocomplete}\" class=\"form-control\" placeholder=\"${form_data[key].name}\" ${required}/></textarea>` +
+        " <div class=\"input-group-append\">" +
+        "   <div class=\"input-group-text\" style=\"padding: 1px;\">" +
+        "   </div>" +
+        " </div>" +
+        "</div>");
+          //console.log(input.html());
+        break;
+
+        case "select":
+        if (key == "clients"){
+          icon = `<button data-toggle="modal" data-target="#clientmodal" data-type="tooltip" data-placement="top" title="Add New Client" type="button" style='width: 39px;' class=\"btn btn-primary btn-sm \"><span class=\"fas ${form_data[key].icon}\"></span></button>`;
+        } else {
+          icon = `<div class=\"input-group-text\"><span class=\"fas ${form_data[key].icon}\"></span></div>`;
+        }
+        input.html("<div class=\"input-group mb-3\">" +
+          `<select tabindex="${form_data[key].tab}" id='${key}' class="form-control" placeholder=\"${form_data[key].name}\" ${required}><option disabled selected>${form_data[key].name}</option></select>` +
+          // `<input tabindex="${form_data[key].tab}" id='${key}' class="form-control" placeholder=\"${form_data[key].name}\"></input>` +
+        " <div class=\"input-group-append\">" +
+        icon +
+        " </div>" +
+        "</div>");
+          //console.log(input.html());
+        break;
+
+        case "datetime":
+        var today = new Date().toISOString().slice(0, 10);
+        input.html("<div class=\"input-group mb-3\">" +
+        `<div  class=\"input-group date\" id=\"${key}\" data-target-input=\"nearest\">` + 
+        `<input value="${today}" tabindex="${form_data[key].tab}" id="${key}" name="${key}" type='text' onfocus="(this.type='date')" onblur="(this.type='text')" placeholder="${form_data[key].name}" class="form-control datetimepicker-input" data-target="#${key}" ${required}>` +
+        `<div class="input-group-append" data-target="#${key}}" data-toggle="datetimepicker">` +
+        `<div class="input-group-text" style="padding: 1px;"></div>` + 
+        `</div>` + 
+        `</div>` +
+        "</div>");
+      break;
+      }
+    }
+  }
+  select2();
+}
+
+function select2(){
+
+  $("#clients").empty();
+  $("#tickets_category").empty();
+  $("#tickets_assigned_user").empty();
+  //$('#tickets_warranty').empty();
+  $('#tickets_status').empty();
+
+  // Clients select Populate
+  /*$('#clients').select2({
+        ajax: {
+        url: '../../api/?clients&list',
+        dataType: 'json',
+          processResults: function (data){
+            
+            Object.keys(data).forEach(key => {
+              data[key].text = data[key].name + " " + data[key].phone
+            });
+            
+            return {results: data};
+          }
+        // Additional AJAX parameters go here; see the end of this chapter for the full code of this example
+        },
+          placeholder: 'Select Client',
+          width: '92.8%',
+          minimumResultsForSearch: Infinity, 
+          matcher: function(param, data){
+           //console.log("asd");
+          }
+      });
+*/
+       
+// Initializing selects
+$('#clients').select2({
+  placeholder: 'Select Client',
+  width: '92.8%',
+  minimumResultsForSearch: 5, 
+  data: getData('?clients&list'), 
+  });
+
+$('#tickets_category').select2({
+  placeholder: 'Select Category',
+  width: '92.3%',
+  minimumResultsForSearch: 5, 
+  data: getData('?category&list', "tickets_category"),
+  allowClear: true,
+});
+
+$('#tickets_assigned_user').select2({
+  placeholder: 'Assign technician',
+  width: '92.8%',
+  minimumResultsForSearch: 5, 
+  data: getData('?users&list', "tickets_assigned_user")
+});
+
+$('#tickets_warranty').select2({width: '100%', placeholder:"Warranty"});
+
+// Clearing default selected value
+$('#clients, #tickets_category, #tickets_assigned_user, #tickets_warranty').val('').change();
+//$('#tickets_category').val('').change();
+
+  // Tickets Status Populate
+  $.ajax({
+    url: "../../api/?tickets&status_list",
+    type: "GET",
+    error: function () {
+      callback();
+    },
+    success: function (res) {
+      let result = JSON.parse(res);
+      //console.log(result);
+
+      Object.keys(result).forEach(key => {
+        let opt = new Option(result[key].status, result[key].id);
+        opt.classList.add(`bg-${result[key].color}`);
+        $("#tickets_status").append(opt);
+      });
+      
+      $('#tickets_status').select2({
+        width: "300px",
+        templateResult: function(option) { 
+          let elem = $(`<div><span id='ticket_status_${option.id}'><span class='${$(option.element).prop('class')}' style='margin: 0px 15px 0px 0px; border-radius: 7px; display: inline-block; width: 15px; height: 15px;'></span>${option.text}</span></div>`);
+          return elem;
+        },
+        templateSelection: function(option) { return $(`<span class="' + ($(option.element).prop('class') || '') + '"><span class='${$(option.element).prop('class')}' style='margin: 0px 15px 0px 0px; border-radius: 7px; display: inline-block; width: 12px; height: 12px;'></span>` + option.text + '</span>'); },
+      });
+    },
+  });
+}
+
+$('#ticketsmodal').on('shown.bs.modal', function (e) {
+  create_form("tickets_form", tickets_form);
+  $(function() {
+      $('[data-type="tooltip"]').tooltip();
+  });
+})
+
+
+$("form#tickets_form").submit(function (e) {
+  e.preventDefault();
+
+  var form_submit = $(this);
+  
+  //console.log(form_submit);
+  var element = {}, data = [];
+  
+  for (let key in tickets_form) {
+    element[key] = form_submit[0][key].value;
+  }
+  data.push(element);
+
+  $.ajax({
+  method: "POST",
+  url: "../../api/?tickets&insert",
+  // Passing all the variables
+  data: data[0],
+  }).done(function (msg) {
+   //console.log(msg);
+    if (msg.includes("true")) {
+      //document.location = "./";
+      loadTable();
+      $("#ticketsmodal").modal("hide");
+      form_submit[0].reset();
+      toastr["success"]("Success adding ticket to the database");
+      debug(`Success adding ticket to the database`, "success");
+    } else {
+      toastr["error"]("Error adding ticket to the database");
+      debug(`Error adding ticket to the database`, "error");
+    }
+  });
+});
+ 
+</script>

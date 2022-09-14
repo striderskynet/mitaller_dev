@@ -1,0 +1,30 @@
+<section class="content">
+  <section class="content-fluid">
+    <form id="sendSMS">
+      <input type="text" name="number" value="+5353498546" /><br />
+      <textarea name="text"></textarea><br />
+      <button type="submit">Enviar</button>
+    </form>
+  </section>
+</section>
+
+<script>
+  $("form#sendSMS").submit(function (e) {
+    e.preventDefault();
+
+    var form_submit = $(this);
+
+    $.ajax({
+      method: "POST",
+      url: "https://send-sms18.p.rapidapi.com/",
+      headers: {
+        "content-type": "application/json",
+        "X-RapidAPI-Key": "f013664429msha040c84ddba90d0p131b63jsn36b2abe465f9",
+        "X-RapidAPI-Host": "send-sms18.p.rapidapi.com",
+      },
+      data: { phone_number: form_submit[0].number.value, text: form_submit[0].text.value },
+    }).done(function (msg) {
+      console.log(msg);
+    });
+  });
+</script>

@@ -1,0 +1,62 @@
+html,
+body {
+  height: 100% !important;
+}
+.modal-backdrop {
+  opacity: 0.7 !important;
+}
+
+.selectize-search-element {
+  padding: 4px 10px 4px 20px !important;
+}
+
+.selectize-search-element > span {
+  margin-right: 10px !important;
+}
+
+.ag-row {
+  border-left: 4px solid transparent !important;
+}
+
+.ag-row:hover {
+  border-left: 4px solid var(--dark) !important;
+}
+.ag-row-selected {
+  border-left: 4px solid var(--ag-material-accent-color) !important;
+}
+
+.ag-row:hover,
+.ag-row-selected {
+  cursor: pointer;
+}
+
+.ag-table-tool {
+  position: absolute;
+  right: 20px;
+  z-index: 1001;
+  margin: 20px;
+}
+.main-footer {
+  margin-top: 0px !important;
+}
+
+.timeline-body .text {
+  padding: 5px;
+}
+
+.data-initials:before {
+  background-color: var(--bs-dark);
+  color: white;
+  opacity: 1;
+  content: attr(data-initials);
+  /*content: "AD";*/
+  display: inline-block;
+  font-weight: bold;
+  border-radius: 50%;
+  vertical-align: middle;
+  margin-right: 0.5em;
+  width: 40px;
+  height: 40px;
+  line-height: 40px;
+  text-align: center;
+}

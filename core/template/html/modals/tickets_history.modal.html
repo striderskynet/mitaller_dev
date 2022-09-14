@@ -1,0 +1,223 @@
+<div class="modal fade" id="ticket_history_modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content login-card-body pb-0">
+      <div class="modal-header">
+        <h4 class="modal-title">Ticket History</h4>
+        <span class="ms-3 text-danger" id="ticket_code_txt">CODE</span>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="timeline">
+          <!--<div class="time-label">
+            <span class="bg-red">10 Feb. 2014</span>
+          </div>
+
+          <div>
+            <i class="fas fa-envelope bg-blue"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> 12:05</span>
+              <h3 class="timeline-header"><a href="#">Support Team</a> sent you an email</h3>
+              <div class="timeline-body">
+                Etsy doostang zoodles disqus groupon greplin oooj voxy zoodles, weebly ning heekya handango imeem plugg dopplr jibjab, movity jajah plickers sifteo edmodo ifttt zimbra. Babblely odeo
+                kaboodle quora plaxo ideeli hulu weebly balihoo...
+              </div>
+              <div class="timeline-footer">
+                <a class="btn btn-primary btn-sm">Read more</a>
+                <a class="btn btn-danger btn-sm">Delete</a>
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <i class="fas fa-user bg-green"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> 5 mins ago</span>
+              <h3 class="timeline-header no-border"><a href="#">Sarah Young</a> accepted your friend request</h3>
+            </div>
+          </div>
+
+          <div>
+            <i class="fas fa-comments bg-yellow"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> 27 mins ago</span>
+              <h3 class="timeline-header"><a href="#">Jay White</a> commented on your post</h3>
+              <div class="timeline-body">Take me to your leader! Switzerland is small and neutral! We are more like Germany, ambitious and misunderstood!</div>
+              <div class="timeline-footer">
+                <a class="btn btn-warning btn-sm">View comment</a>
+              </div>
+            </div>
+          </div>
+
+          <div class="time-label">
+            <span class="bg-green">3 Jan. 2014</span>
+          </div>
+
+          <div>
+            <i class="fa fa-camera bg-purple"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> 2 days ago</span>
+              <h3 class="timeline-header"><a href="#">Mina Lee</a> uploaded new photos</h3>
+              <div class="timeline-body">
+                <img src="https://placehold.it/150x100" alt="..." />
+                <img src="https://placehold.it/150x100" alt="..." />
+                <img src="https://placehold.it/150x100" alt="..." />
+                <img src="https://placehold.it/150x100" alt="..." />
+                <img src="https://placehold.it/150x100" alt="..." />
+              </div>
+            </div>
+          </div>
+
+          <div>
+            <i class="fas fa-video bg-maroon"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> 5 days ago</span>
+              <h3 class="timeline-header"><a href="#">Mr. Doe</a> shared a video</h3>
+              <div class="timeline-body">
+                <div class="embed-responsive embed-responsive-16by9">
+                  <iframe class="embed-responsive-item" src="https://www.youtube.com/embed/tMWkeBIohBs" allowfullscreen=""></iframe>
+                </div>
+              </div>
+              <div class="timeline-footer">
+                <a href="#" class="btn btn-sm bg-maroon">See comments</a>
+              </div>
+            </div>
+          </div>
+          -->
+          <!--<div class="time-label" id="ticket_created">
+            <span class="bg-blue">10 Feb. 2014</span>
+          </div>
+          <div id="ticket_created_info">
+            <i id="ticket_created_status" class="fas fa-circle bg-blue"></i>
+            <div class="timeline-item">
+              <span class="time"><i class="fas fa-clock"></i> <span id="ticket_created_info_clock"></span></span>
+              <h3 class="timeline-header" id="ticket_created_info_title"><a href="#">Support Team</a> created this ticket with code:</h3>
+              <div class="timeline-body"></div>
+            </div>
+          </div>
+          <div id="time_body">
+            <div class="time-label" id="ticket_created">
+              <span class="bg-blue">10 Feb. 2014</span>
+            </div>
+          </div>-->
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    function format_date(date) {
+      var dd = String(date.getDate()).padStart(2, "0");
+      var mm = String(date.getMonth() + 1).padStart(2, "0"); //January is 0!
+      var yyyy = date.getFullYear();
+
+      var date_format = yyyy + "-" + mm + "-" + dd;
+
+      return date_format;
+    }
+
+    function ticket_history_form(elem) {
+      $(".timeline").empty();
+      var timeline = new Array();
+
+      var options = { weekday: "long", year: "numeric", month: "long", day: "numeric" };
+      let created_date = new Date(elem.tickets_created);
+
+      var hours = created_date.getHours();
+      var ampm = hours >= 12 ? "PM" : "AM";
+      hours = hours % 12;
+
+      let created_date_time = hours + ":" + created_date.getMinutes() + " " + ampm;
+      let created_date_day = format_date(created_date);
+      let create_date_title = `<a href="#">${elem.tickets_assigned_user}</a> created this ticket for <a href="#">${elem.clients}</a>`;
+      let create_date_text =
+        `<blockquote><p class='h4'>Defect, Reason</p><small>${elem.repair_defect}, ${elem.repair_reason}</small></blockquote>` +
+        `<blockquote class="quote-secondary"><p class='h4'>Observations</p><small>${elem.tickets_observations}</small></blockquote>` +
+        `<blockquote class="quote-secondary"><p class='h4'>Comments</p><small>${elem.tickets_comments}</small></blockquote>`;
+
+      /*
+      <div class='text'>${elem.repair_defect}</div>
+        <div class='text'>${elem.repair_reason}</div><br>` +
+        `<h4>Observations</h4> <div class='text'>${elem.tickets_observations}</div><br>` +
+        `<h4>Comments</h4> <div class='text'>${elem.tickets_comments}</div>`;
+*/
+
+      $("#ticket_code_txt").html(elem.tickets_code);
+
+      timeline[created_date_day] = new Array();
+      timeline[created_date_day].push(new Object({ time: created_date_time, status: elem.tickets_status, user: elem.tickets_assigned_user, title: create_date_title, text: create_date_text }));
+
+      status_query = `SELECT * FROM \`data_tickets_status\``;
+      let ticket_status = getAjaxValue("../../api/?query=" + status_query, "GET");
+
+      update_query = `SELECT * FROM \`data_tickets_update\` WHERE \`ticket_id\`=${elem.id}`;
+      let update_list = getAjaxValue("../../api/?query=" + update_query, "GET");
+
+      users_query = `SELECT id, name FROM \`general_users\``;
+      let users_list = getAjaxValue("../../api/?query=" + users_query, "GET");
+      let users_list_ordered = new Array();
+
+      Object.keys(users_list).forEach((key) => {
+        users_list_ordered[users_list[key].id] = users_list[key].name;
+      });
+
+      //console.log(users_list_ordered);
+
+      Object.keys(update_list).forEach((key) => {
+        let update_date = new Date(update_list[key].update_date);
+        let update_day = format_date(update_date);
+        let update_status_info = ticket_status[update_list[key].update_status - 1];
+        let update_user_name = users_list_ordered[update_list[key].update_user];
+        let update_title = `<a href="#">${update_user_name}</a> changed the status to <a href="#" class="text-${update_status_info.color}">${update_status_info.status}, </a>${update_list[key].update_charge} $`;
+
+        var hours = update_date.getHours();
+        var ampm = hours >= 12 ? "PM" : "AM";
+        hours = hours % 12;
+
+        let update_hour = hours + ":" + update_date.getMinutes() + " " + ampm;
+
+        if (typeof timeline[update_day] === "undefined") timeline[update_day] = new Array();
+
+        timeline[update_day].push(
+          new Object({ time: update_hour, status: update_list[key].update_status, title: update_title, text: update_list[key].update_comments, color: update_status_info.color })
+        );
+      });
+
+      const main_element = $(".timeline");
+
+      for (key in timeline) {
+        let temp_date = new Date(key).toLocaleDateString("en-US", { weekday: "long", year: "numeric", month: "long", day: "numeric" });
+        const date_element = $(`<div class="time-label" id="ticket_created"><span class="bg-blue">${temp_date}</span></div>`);
+        main_element.append(date_element);
+
+        for (subKey in timeline[key]) {
+          const date_info = $(
+            `<div id="ticket_created_info">
+              <i id="ticket_created_status" class="fas fa-circle bg-${timeline[key][subKey].color}"></i>
+              <div class="timeline-item">
+                <span class="time">
+                  <i class="fas fa-clock"></i> <span id="ticket_created_info_clock">${timeline[key][subKey].time}</span>
+                </span>
+                <h3 class="timeline-header" id="ticket_created_info_title">
+                  ${timeline[key][subKey].title}
+                </h3>
+                <div class="timeline-body">${timeline[key][subKey].text}</div>
+              </div>
+            </div>`
+          );
+
+          main_element.append(date_info);
+        }
+        //console.log(timeline[key]);
+      }
+
+      const date_end = $(`<div id="ticket_created"><i class="fas fa-clock bg-gray"></i></div>`);
+      main_element.append(date_end);
+
+      //console.log(timeline);
+      //  console.log(update_list);
+      //console.log(elem);
+    }
+  </script>
+</div>

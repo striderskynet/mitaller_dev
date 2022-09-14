@@ -1,0 +1,67 @@
+<div class="modal fade" id="clientmodal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content login-card-body pb-0">
+      <div class="modal-header">
+        <h4 class="modal-title">Create Client</h4>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">×</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        <form id="client_form" class="col s12">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="client_name" name="client_name" type="text" class="validate form-control" required="" placeholder="Name" />
+                    <span class="input-group-text"><i class="fa fa-user"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input name="client_company" id="client_company" type="text" class="validate form-control" placeholder="Company" />
+                    <span class="input-group-text"><i class="fa fa-building"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input name="client_address" id="client_address" type="text" class="validate form-control input-xs" placeholder="Address" />
+                    <span class="input-group-text"><i class="fa fa-road"></i></span>
+                </div>
+              </div>
+            </div>
+
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="client_phone" name="client_phone" type="phone" class="validate form-control" data-mask="(9) 999-9999" placeholder="Phone" />
+                  <span class="input-group-text"><i class="fa fa-phone"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="client_email" name="client_email" type="email" class="validate form-control" placeholder="Email"/>
+                  <span class="input-group-text"><i class="fa fa-envelope"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea placeholder="Comments" class="form-control" id="client_info" name="client_info" rows="6"></textarea>
+              </div>
+            </div>
+          </div>
+        
+      </div>
+      <div class="modal-footer"><button type="submit" class="btn btn-primary">Create client</button></div>
+    </div>
+  </form>
+  </div>
+</div>

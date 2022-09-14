@@ -1,0 +1,171 @@
+<div class="modal fade" id="ticket_status_modal" role="dialog" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content login-card-body pb-0">
+      <form id="ticket_status_form" class="col s12">
+        <div class="modal-header">
+          <h4 class="modal-title">Modify Ticket Status</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <div class="row">
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_client_id" name="ticket_client_id" type="hidden" class="validate form-control" />
+                  <input id="ticket_client" name="ticket_client" type="text" class="validate form-control" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_category" name="ticket_category" type="text" class="validate form-control" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_date" name="ticket_date" type="text" class="validate form-control" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_model" name="ticket_model" type="text" class="validate form-control" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-12">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_defect" name="ticket_defect" type="text" class="validate form-control" disabled />
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <select name="ticket_status_change" id="ticket_status_change" class="validate form-control"></select>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12 col-lg-6">
+              <div class="form-group">
+                <div class="input-group mb-3">
+                  <input id="ticket_charge" name="ticket_charge" type="text" class="validate form-control" />
+                  <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-12">
+              <div class="form-group">
+                <textarea placeholder="Comments" class="form-control" id="update_comments" name="update_comments" rows="6" required></textarea>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <div class="form-group">
+            <input id="ticket_assigned_user" type="text" class="validate form-control" disabled />
+          </div>
+          <div class="vr"></div>
+          <button type="submit" class="btn btn-primary">Update ticket status</button>
+        </div>
+      </form>
+    </div>
+  </div>
+</div>
+
+<script>
+  function status_form(elem) {
+    $("#ticket_status_change").empty();
+    $.ajax({
+      url: "../../api/?tickets&status_list",
+      type: "GET",
+      error: function () {
+        callback();
+      },
+      success: function (res) {
+        let result = JSON.parse(res);
+        //console.log(elem);
+
+        Object.keys(result).forEach((key) => {
+          let opt = new Option(result[key].status, result[key].id);
+          opt.classList.add(`bg-${result[key].color}`);
+          if (result[key].id == elem.tickets_status) opt.selected = "selected";
+          $("#ticket_status_change").append(opt);
+        });
+      },
+    });
+
+    $("#ticket_client").val(elem.clients);
+    $("#ticket_client_id").val(elem.id);
+    $("#ticket_category").val(elem.tickets_category);
+    $("#ticket_date").val(elem.tickets_created);
+    $("#ticket_model").val(elem.device_brand + ", " + elem.device_model);
+    $("#ticket_defect").val(elem.repair_defect + ", " + elem.repair_reason);
+    $("#ticket_charge").val(elem.tickets_charge);
+    $("#ticket_assigned_user").val(elem.tickets_assigned_user);
+
+    $("#ticket_status_change").select2({
+      width: "350px",
+      templateResult: function (option) {
+        let elem = $(
+          `<div><span id='ticket_status_${option.id}'><span class='${$(option.element).prop(
+            "class"
+          )}' style='margin: 0px 15px 0px 0px; border-radius: 7px; display: inline-block; width: 15px; height: 15px;'></span>${option.text}</span></div>`
+        );
+        return elem;
+      },
+      templateSelection: function (option) {
+        return $(
+          `<span class="' + ($(option.element).prop('class') || '') + '"><span class='${$(option.element).prop(
+            "class"
+          )}' style='margin: 0px 15px 0px 0px; border-radius: 7px; display: inline-block; width: 12px; height: 12px;'></span>` +
+            option.text +
+            "</span>"
+        );
+      },
+    });
+  }
+
+  $("form#ticket_status_form").submit(function (e) {
+    e.preventDefault();
+
+    var ticket_status_form = $(this);
+
+    const update = {
+      ticket_id: ticket_status_form[0].ticket_client_id.value,
+      update_status: ticket_status_form[0].ticket_status_change.value,
+      update_charge: ticket_status_form[0].ticket_charge.value.replace("$", "").trim(),
+      update_comments: ticket_status_form[0].update_comments.value,
+      update_user: logged_user,
+    };
+
+    $.ajax({
+      method: "POST",
+      url: "../../api/?tickets&status_add",
+      // Passing all the variables
+      data: update,
+    }).done(function (msg) {
+      //console.log(msg);
+      if (msg.includes("true")) {
+        //document.location = "./";
+        loadTable();
+        $("#ticket_status_modal").modal("hide");
+        ticket_status_form[0].reset();
+        toastr["success"]("Success updating ticket to the database");
+        debug(`Success updating ticket to the database`, "success");
+      } else {
+        toastr["error"]("Error updating ticket to the database");
+        debug(`Error updating ticket to the database`, "error");
+      }
+    });
+
+    //console.log(form_submit);
+  });
+</script>
