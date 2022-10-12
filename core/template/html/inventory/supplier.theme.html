@@ -1,0 +1,33 @@
+<section class="content">
+  <section class="content-fluid">
+    <div style="position: absolute; z-index: 1001; right: 20px">
+      <button id="button_supplier_delete" type="button" class="btn btn-sm btn-danger btn-icon-split mt-2 ml-5 d-none">
+        <span class="icon text-white"><i class="fas fa-circle-minus"></i></span>
+        <span class="text">Delete</span><span id="text"></span>
+      </button>
+
+      <button
+        data-type="tooltip"
+        title="Add new Supplier"
+        id="button_supplier_add"
+        data-toggle="modal"
+        data-target="#inventory_supplier_modal"
+        style="display: none"
+        type="button"
+        class="btn btn-sm btn-primary btn-icon-split mt-2"
+      >
+        <span class="icon text-white"><i class="fas fa-circle-plus"></i></span>
+        <span class="text">Supplier</span>
+      </button>
+    </div>
+
+    <h5 class="mb-2 mt-0 pt-3 ms-3">
+      Suppliers
+      <div id="supplier_count_badge" class="badge badge-success">0</div>
+    </h5>
+  </section>
+
+  <section class="content-fluid">
+    <div id="main_supplier_table" class="ag-theme-material"></div>
+  </section>
+</section>

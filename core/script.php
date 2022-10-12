@@ -22,5 +22,5 @@ if (isset($_GET['js'])) {
         $script = \JShrink\Minifier::minify($script);
     }
 
-    echo $script;
+    echo str_replace("{local_address}", $_ADDRESS,  $script);
 }

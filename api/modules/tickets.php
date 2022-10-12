@@ -97,7 +97,7 @@ function status_add()
     $values =  implode(', ', $values);
 
     $query = "INSERT INTO `data_tickets_update` ( {$keys} ) VALUES ( {$values} );";
-    $query_ticket = "UPDATE `data_tickets` SET `tickets_status`='{$_POST['update_status']}', `tickets_charge`='{$_POST['update_charge']}' WHERE `id`='{$_POST['ticket_id']}';";
+    $query_ticket = "UPDATE `data_tickets` SET `tickets_status`='{$_POST['update_status']}', `tickets_charge`='{$_POST['update_charge']}', `tickets_charge_coin`='{$_POST['update_charge_coin']}' WHERE `id`='{$_POST['ticket_id']}';";
     //echo $query;
 
     if ($db->query($query)) $result = "true";

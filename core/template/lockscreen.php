@@ -10,7 +10,7 @@
         <div class="lockscreen-item">
 
             <div class="lockscreen-image">
-                <img src="\elements\uploaded\users/nesty-160x160.png" alt="User Image">
+                <img src="\elements\uploaded\users/no_avatar.png" alt="User Image">
             </div>
 
 
@@ -61,6 +61,7 @@
         }).done(function(msg) {
             if (msg.includes("true")) {
                 Cookies.set("lockscreen", "false");
+                debug("Unlocked screen");
                 document.location = "./";
             } else {
                 // console.log(msg);

@@ -15,22 +15,22 @@ if (isset($_SESSION['USERID'])) {
 
     require_once(_THEME_DIR . "navigation.php");
 
+    function loadPage()
+    {
+        $filePath = _THEME_DIR . @array_keys($_GET)[0] . ".php";
+
+        if (file_exists($filePath))
+            return $filePath;
+        else
+            return _THEME_DIR . "error" . DS . "404.php";
+    }
 
     switch (@array_keys($_GET)[0]) {
         default:
             include_once(_THEME_DIR . $config['site']['start_page'] . ".php");
             break;
-        case "tickets":
-        case "sales":
-        case "finances":
-        case "inventory":
-        case "clients":
-        case "analytics":
-        case "calls":
-            include_once(_THEME_DIR . @array_keys($_GET)[0] . ".php");
-            break;
-        case "update":
-            include_once(_LOCAL . "core" . DS .  @array_keys($_GET)[0] . ".php");
+        case "tickets" || "sales" || "finances" || "inventory" || "analytics" || "calls" || "POS" || "chat" || "picture":
+            include_once(loadPage());
             break;
     }
 

@@ -1,3 +1,6 @@
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
 <div class="modal fade" id="inventory_category_modal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     <div class="modal-dialog modal-lg">
       <div class="modal-content login-card-body pb-0">
@@ -35,30 +38,73 @@
             </div>
           
         </div>
-        <div class="modal-footer"><button type="submit" class="btn btn-primary">Create Category</button></div>
+        <div class="modal-footer">
+          <div style="position: absolute; left: 20px;">
+
+            <div id="actions" class="row" style="display: inline-block">
+              <div>
+                <span class="btn btn-primary fileinput-button dz-clickable">
+                  <i class="fas fa-camera"></i>
+                </span>    
+              </div>
+            </div>
+
+            <div id="previews" style="display: inline-block">
+              <div id="template" class="row">
+                <div class="col-auto">
+                  <span class="preview"><img class='rounded-circle' src="data:," alt="" data-dz-thumbnail /></span>
+                </div>
+                <div class="col d-flex align-items-center">
+                  <p class="mb-0">
+                  <span class="lead" data-dz-name></span> (<span data-dz-size></span>)
+                  </p>
+                  <br>
+                  <strong class="error text-danger" data-dz-errormessage></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Create Category</button></div>
       </div>
     </form>
     </div>
   </div>
 
 <script defer>
-    function create_category_list(data){
-        let res = new Array;
+function create_category_list(data){
+  let res = new Array;
 
-        res.push({id: 0, text: "None"});
-        Object.keys(data).forEach(element => {
-            res.push({id: data[element].categoryID, text: data[element].name});
-        });
-        
+  res.push({id: 0, text: "None"});
+  Object.keys(data).forEach(element => {
+    res.push({id: data[element].categoryID, text: data[element].name});
+  });
+  
 
-         $('#parent_category').select2({
-            placeholder: 'Parent Category',
-             width: '88.5%',
-             minimumResultsForSearch: 5, 
-             data:  res
-             });
-        
-    }
-    
+  $('#parent_category').select2({
+    placeholder: 'Parent Category',
+    width: '88.5%',
+    minimumResultsForSearch: 5, 
+    data:  res,
+  });
+}
 
+var previewNode = document.querySelector("#template");
+previewNode.id = "";
+var previewTemplate = previewNode.parentNode.innerHTML;
+previewNode.parentNode.removeChild(previewNode);
+
+let myDropzone = new Dropzone("div#actions", {
+  url: "../../api/?upload&category_picture",
+  createImageThumbnails: true,
+  thumbnailWidth: 50,
+  thumbnailHeight: 50,
+  resizeWidth: 64,
+  maxFiles: 1,
+  // renameFile: renameFile,
+  clickable: ".fileinput-button",
+  previewTemplate: previewTemplate,
+  previewsContainer: "#previews",
+  autoProcessQueue: false,
+});
 </script>

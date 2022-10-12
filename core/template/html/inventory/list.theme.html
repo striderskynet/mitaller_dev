@@ -1,29 +1,37 @@
+<div class="modal fade" id="invImgModal" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog modal-lg">
+    <div class="modal-content login-card-body">
+      <img class="modal-content" id="img01" width="auto" />
+    </div>
+  </div>
+</div>
+
 <section class="content">
   <section class="content-fluid">
     <div style="position: absolute; z-index: 1001; right: 20px">
-      <button id="button_tickets_delete" type="button" class="btn btn-sm btn-danger btn-icon-split mt-2 ml-5 d-none">
+      <button id="button_inventory_delete" type="button" class="btn btn-sm btn-danger btn-icon-split mt-2 ml-5 d-none">
         <span class="icon text-white"><i class="fas fa-circle-minus"></i></span>
         <span class="text">Delete</span><span id="text"></span>
       </button>
 
       <button
         data-type="tooltip"
-        title="Add new Tickets"
-        id="button_tickets_add"
+        title="Add new items"
+        id="button_inventory_add"
         data-toggle="modal"
-        data-target="#ticketsmodal"
+        data-target="#inventory_item_modal"
         style="display: none"
         type="button"
         class="btn btn-sm btn-primary btn-icon-split mt-2"
       >
         <span class="icon text-white"><i class="fas fa-circle-plus"></i></span>
-        <span class="text">Inventory</span>
+        <span class="text">Items</span>
       </button>
     </div>
 
     <h5 class="mb-2 mt-0 pt-3 ms-3">
       Inventory
-      <div id="tickets_count_badge" class="badge badge-success">0</div>
+      <div id="inventory_count_badge" class="badge badge-success">0</div>
 
       <!--<div class="btn-group btn-group-toggle ms-2" data-toggle="buttons">
           <label class="btn btn-sm btn-primary"> <input type="radio" name="options" id="option_a1" autocomplete="off" checked="" /> List </label>

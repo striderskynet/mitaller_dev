@@ -1,51 +1,8 @@
 <?php
-require_once("./config.php");
-require_once("./core/template/header.php");
-?>
+$url = "https://ipaudio.club/wp-content/uploads/PRIME/Origin/";
 
-
-
-<div id="myGrid" style="height: 200px; width:500px;" class="ag-theme-alpine"></div>
-
-<script>
-  const columnDefs = [{
-      field: "make"
-    },
-    {
-      field: "model"
-    },
-    {
-      field: "price"
-    }
-  ];
-
-  // specify the data
-  const rowData = [{
-      make: "Toyota",
-      model: "Celica",
-      price: 35000
-    },
-    {
-      make: "Ford",
-      model: "Mondeo",
-      price: 32000
-    },
-    {
-      make: "Porsche",
-      model: "Boxster",
-      price: 72000
-    }
-  ];
-
-  // let the grid know which columns and what data to use
-  const gridOptions = {
-    columnDefs: columnDefs,
-    rowData: rowData
-  };
-
-  // setup the grid after the page has finished loading
-  document.addEventListener('DOMContentLoaded', () => {
-    const gridDiv = document.querySelector('#myGrid');
-    new agGrid.Grid(gridDiv, gridOptions);
-  });
-</script>
+for ($i = 1; $i <= 100; $i++) {
+  $r = $i;
+  if ($i < 10) $r = "0" . $i;
+  echo "<a href=\"{$url}{$r}.mp3?_={$i}\">Capitulo {$i}</a><br> \n ";
+}

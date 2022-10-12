@@ -11,5 +11,5 @@ $theme_script = $position[2];
 <?php echo $theme; ?>
 
 <?php
-if ($theme_script) echo ("<script type=\"text/javascript\" src=\"./core/script.php?js=$theme_script\" defer></script>");
+if ($theme_script) echo ("<script type=\"text/javascript\" src=\"{$_ADDRESS}/core/script.php?js=$theme_script\" defer></script>");
 ?>

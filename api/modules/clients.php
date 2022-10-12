@@ -45,7 +45,7 @@ function clients_insert()
 function clients_list()
 {
     global $db;
-    $query = 'SELECT * FROM `data_clients`';
+    $query = 'SELECT * FROM `data_clients` ORDER BY id DESC';
     $data = $db->query($query)->fetchAll();
 
     header('Content-Type: application/json');

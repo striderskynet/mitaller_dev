@@ -4,6 +4,7 @@ if ($_GET['query'] == "")
 else
     $query = (string)$_GET['query'];
 
+
 try {
     header('Content-Type: application/json');
     $response = $db->query($query)->fetchAll();

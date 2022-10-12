@@ -26,7 +26,7 @@
 
             <!-- Right navbar links -->
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item">
+                <!-- <li class="nav-item">
                     <div class="dropdown">
                         <button class="btn btn-sm m-1 mr-2 btn-success btn-icon-split dropdown-toggle" type="button" id="dropdownMenuButton" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                             <span class="icon text-white"><i class="fas fa-circle-plus"></i></span>
@@ -41,7 +41,7 @@
                         </div>
                     </div>
 
-                </li>
+                </li> -->
                 <li class="nav-item">
                     <a class="nav-link" data-widget="navbar-search" href="#" role="button">
                         <i class="fas fa-search"></i>
@@ -64,64 +64,16 @@
                 </li>
 
                 <!-- Messages Dropdown Menu -->
+
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-comments"></i>
-                        <span class="badge badge-danger navbar-badge">3</span>
+                        <span class="badge badge-danger navbar-badge" style="display: none;" id="recentMessagesBadge">0</span>
                     </a>
-                    <div class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <!--<img src="dist/img/user1-128x128.jpg" alt="User Avatar" class="img-size-50 mr-3 img-circle">-->
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Brad Diesel
-                                        <span class="float-right text-sm text-danger"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">Call me whenever you can...</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <!--<img src="dist/img/user8-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">-->
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        John Pierce
-                                        <span class="float-right text-sm text-muted"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">I got your message bro</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item">
-                            <!-- Message Start -->
-                            <div class="media">
-                                <!--<img src="dist/img/user3-128x128.jpg" alt="User Avatar" class="img-size-50 img-circle mr-3">-->
-                                <div class="media-body">
-                                    <h3 class="dropdown-item-title">
-                                        Nora Silvester
-                                        <span class="float-right text-sm text-warning"><i class="fas fa-star"></i></span>
-                                    </h3>
-                                    <p class="text-sm">The subject goes here</p>
-                                    <p class="text-sm text-muted"><i class="far fa-clock mr-1"></i> 4 Hours Ago</p>
-                                </div>
-                            </div>
-                            <!-- Message End -->
-                        </a>
-                        <div class="dropdown-divider"></div>
-                        <a href="#" class="dropdown-item dropdown-footer">See All Messages</a>
-                    </div>
+
+                    <div id="recentMessagesList" class="dropdown-menu dropdown-menu-lg dropdown-menu-right"></div>
                 </li>
-                <!-- Notifications Dropdown Menu -->
+                <!--
                 <li class="nav-item dropdown">
                     <a class="nav-link" data-toggle="dropdown" href="#">
                         <i class="far fa-bell"></i>
@@ -147,16 +99,16 @@
                         <div class="dropdown-divider"></div>
                         <a href="#" class="dropdown-item dropdown-footer">See All Notifications</a>
                     </div>
-                </li>
+-->
                 <li class="nav-item dropdown user-menu">
                     <a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown">
-                        <img src="\elements\uploaded\users/nesty-160x160.png" class="user-image img-circle elevation-2" alt="User Image">
-                        <span class="d-none d-md-inline">Nesty</span>
+                        <img src="\elements\uploaded\users\<?php echo $_SESSION['USER_AVATAR'] ?>.png" class="user-image img-circle elevation-2" alt="User Image">
+                        <span class="d-none d-md-inline"><?php echo $_SESSION['USERNICK'] ?></span>
                     </a>
                     <ul class="dropdown-menu dropdown-menu-lg dropdown-menu-right">
 
                         <li class="user-header bg-primary">
-                            <img src="\elements\uploaded\users/nesty-160x160.png" class="img-circle elevation-2" alt="User Image">
+                            <img src="\elements\uploaded\users/<?php echo $_SESSION['USER_AVATAR'] ?>.png" class="img-circle elevation-2" alt="User Image">
                             <p>
                                 Nesty - Administrador
                                 <small>Member since Nov. 2012</small>
@@ -206,8 +158,8 @@
         <!-- Main Sidebar Container -->
         <aside class="main-sidebar sidebar-dark-primary elevation-4">
             <!-- Brand Logo -->
-            <a href="/" class="brand-link d-flex justify-content-center align-items-center">
-                <img class='mr-3' style="width: 40px;" src="../../elements/images/components/site_logo.svg">
+            <a href="/" class="brand-link">
+                <img class='brand-image img-circle elevation-3' src="<?php echo $_ADDRESS ?>elements/images/components/site_logo.svg">
                 <span class="brand-text font-weight-light"><?php echo $config['title'] ?></span>
             </a>
 
@@ -221,49 +173,49 @@
              with font-awesome or any other icon font library -->
 
                         <li class="nav-item">
-                            <a id="nav-link-tickets" href="../../action/tickets/" class="nav-link">
+                            <a id="nav-link-tickets" href="<?php echo $_ADDRESS ?>action/tickets/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-ticket" aria-hidden="true"></i>
                                 <p>Tickets</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-link-sales" href="../../action/sales/" class="nav-link">
+                            <a id="nav-link-sales" href="<?php echo $_ADDRESS ?>action/sales/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-cart-plus" aria-hidden="true"></i>
                                 <p>Sales</p>
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-link-finances" href="../../action/finances/" class="nav-link">
+                            <a id="nav-link-finances" href="<?php echo $_ADDRESS ?>action/finances/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-dollar" aria-hidden="true"></i>
                                 <p>Finances</p>
                             </a>
                         </li>
                         <li class="nav-item" id='inventory_submenu'>
-                            <a id="nav-link-inventory" href="../../action/inventory/" class="nav-link">
+                            <a id="nav-link-inventory" href="<?php echo $_ADDRESS ?>action/inventory/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-boxes-stacked" aria-hidden="true"></i>
                                 <p>Inventory <i class="right fas fa-angle-left"></i></p>
                             </a>
                             <ul class="nav nav-treeview ms-3">
                                 <li class="nav-item">
-                                    <a id='nav-link-inventory-list' href="../../action/inventory/?list" class="nav-link">
+                                    <a id='nav-link-inventory-list' href="<?php echo $_ADDRESS ?>action/inventory/list/" class="nav-link">
                                         <i class="fas fa-list nav-icon"></i>
                                         <p>Inventory list</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id='nav-link-inventory-supplier' href="../../action/inventory/?supplier" class="nav-link">
+                                    <a id='nav-link-inventory-supplier' href="<?php echo $_ADDRESS ?>action/inventory/supplier/" class="nav-link">
                                         <i class="fas fa-shop nav-icon"></i>
                                         <p>Suppliers</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id='nav-link-inventory-manufacturers' href="../../action/inventory/?manufacturer" class="nav-link">
+                                    <a id='nav-link-inventory-manufacturers' href="<?php echo $_ADDRESS ?>action/inventory/manufacturers/" class="nav-link">
                                         <i class="fas fa-industry nav-icon"></i>
                                         <p>Manufacturers</p>
                                     </a>
                                 </li>
                                 <li class="nav-item">
-                                    <a id='nav-link-inventory-categories' href="../../action/inventory/?categories" class="nav-link">
+                                    <a id='nav-link-inventory-categories' href="<?php echo $_ADDRESS ?>action/inventory/categories/" class="nav-link">
                                         <i class="fas fa-table-list nav-icon"></i>
                                         <p>Categories</p>
                                     </a>
@@ -272,7 +224,7 @@
                         </li>
 
                         <li class="nav-item">
-                            <a id="nav-link-clients" href="../../action/clients/" class="nav-link">
+                            <a id="nav-link-clients" href="<?php echo $_ADDRESS ?>action/clients/" class="nav-link">
                                 <i class="nav-icon fas fa-users" aria-hidden="true"></i>
                                 <p>Clients</p>
                             </a>
@@ -281,7 +233,7 @@
                             <hr class='mt-2' style='border: 1px solid #eee;' />
                         </li>
                         <li class="nav-item ">
-                            <a id="nav-link-analytics" href="../../action/analytics/" class="nav-link">
+                            <a id="nav-link-analytics" href="<?php echo $_ADDRESS ?>action/analytics/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-line-chart" aria-hidden="true"></i>
                                 <p>Analytics</p>
                             </a>
@@ -293,7 +245,7 @@
                             </a>
                         </li>
                         <li class="nav-item">
-                            <a id="nav-link-calls" href="../../action/calls/" class="nav-link">
+                            <a id="nav-link-calls" href="<?php echo $_ADDRESS ?>action/calls/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-phone" aria-hidden="true"></i>
                                 <p>Calls
                                     <span class="right badge badge-primary">15</span>
@@ -304,7 +256,7 @@
                             <hr class='mt-2' style='border: 1px solid #eee;' />
                         </li>
                         <li class="nav-item">
-                            <a href="#" class="nav-link">
+                            <a id="nav-link-POS" href="<?php echo $_ADDRESS ?>action/POS/" class="nav-link">
                                 <i class="nav-icon fa-solid fa-store" aria-hidden="true"></i>
                                 <p>POS</p>
                             </a>

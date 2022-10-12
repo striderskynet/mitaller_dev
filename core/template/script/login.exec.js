@@ -10,7 +10,7 @@ $("#login-form").submit(function (e) {
 
   $.ajax({
     method: "POST",
-    url: "./api/?users&verify",
+    url: local_address + "/api/?users&verify",
     // Passing all the variables
     data: {
       username: log_user,

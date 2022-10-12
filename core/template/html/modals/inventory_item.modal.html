@@ -1,0 +1,265 @@
+<script src="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone-min.js"></script>
+<link href="https://unpkg.com/dropzone@6.0.0-beta.1/dist/dropzone.css" rel="stylesheet" type="text/css" />
+
+<div class="modal fade" id="inventory_item_modal" role="dialog" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content login-card-body pb-0">
+        <div class="modal-header">
+          <h4 class="modal-title">Add item</h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">×</span>
+          </button>
+        </div>
+        <div class="modal-body">
+          <form id="inventory_item_form" class="col s12">
+            <div class="row">
+             
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input  name="name" id="inventory_item_name" type="text" class="validate form-control" required="" placeholder="Name" />
+                      <span class="input-group-text"><i class="fa fa-boxes-stacked"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <select name="category" id="category" class="validate form-control" placeholder="Category"></select>
+                      <span class="input-group-text"><i class="fa fa-table-list"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <select name="supplier" id="supplier" class="validate form-control" placeholder="Supplier"></select>
+                      <span class="input-group-text"><i class="fa fa-shop"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <select name="subcategory" id="subcategory"class="validate form-control" placeholder="Subcategory"></select>
+                      <span class="input-group-text"><i class="fa fa-table-list"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <select name="brand" id="brand" class="validate form-control" placeholder="Brand"></select>
+                      <span class="input-group-text"><i class="fa fa-industry"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input name="in_stock" id="in_stock" class="validate form-control" placeholder="Amount in Stock">
+                      <span class="input-group-text"><i class="fa fa-hashtag"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input name="model" id="model" class="validate form-control" placeholder="Model">
+                      <span class="input-group-text"><i class="fa fa-industry"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input name="minimum_stock_alert" id="minimum_stock_alert" type="text" class="validate form-control" placeholder="Alert on minimum">
+                      <span class="input-group-text"><i class="fa fa-exclamation-triangle"></i></span>
+                  </div>
+                </div>
+              </div>
+              </div>
+            <div class="row bg-light rounded p-3 border border-success">
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input name="buy_price" id="buy_price" type="text" class="validate form-control" placeholder="Buy Price">
+                      <span class="input-group-text"><i class="fa fa-dollar text-danger"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <div class="col-md-12 col-lg-6">
+                <div class="form-group">
+                  <div class="input-group mb-3">
+                    <input name="sell_price" id="sell_price" type="text" class="validate form-control" placeholder="Sell Price">
+                      <span class="input-group-text"><i class="fa fa-dollar text-success"></i></span>
+                  </div>
+                </div>
+              </div>
+
+              <hr>
+              <div class="col-md-12">
+                <div class="form-group">
+                  <textarea placeholder="Description" class="form-control" id="inventory_item_description" name="description" rows="6"></textarea>
+                </div>
+              </div>
+            </div>
+        </div>
+        <div class="modal-footer">
+          <div style="position: absolute; left: 20px;">
+
+            <div id="actions" class="row" style="display: inline-block">
+              <div>
+                <span class="btn btn-primary fileinput-button dz-clickable">
+                  <i class="fas fa-camera"></i>
+                </span>    
+              </div>
+            </div>
+
+            <div id="previews" style="display: inline-block">
+              <div id="template" class="row">
+                <div class="col-auto">
+                  <span class="preview"><img class='rounded-circle' src="data:," alt="" data-dz-thumbnail /></span>
+                </div>
+                <div class="col d-flex align-items-center">
+                  <p class="mb-0">
+                  <span class="lead" data-dz-name></span> (<span data-dz-size></span>)
+                  </p>
+                  <br>
+                  <strong class="error text-danger" data-dz-errormessage></strong>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add item</button></div>
+      </div>
+    </form>
+    </div>
+  </div>
+
+<script>
+    let allCat = getData(`?category&inv_list&where=WHERE \`subcategoryID\` is NULL`, "inventory_category");
+    let allCatfirstSelected = getData(`?category&inv_list&where=WHERE \`subcategoryID\` ='1'`, "inventory_category");
+    let allSupplier = getData(`?inventory&supplier_list`, "inventory_supplier");
+    let allBrand = getData(`?inventory&manufacturer_list`, "inventory_brand");
+    //let allCats = getData(`?category&inv_list&where=WHERE \`subcategoryID\` ='1' `, "inventory_category");
+
+  $categorySelect =  $('#category');
+  $categorySelect.select2({
+    placeholder: 'Select Category',
+    width: '88.7%',
+    minimumResultsForSearch: 5, 
+    data: allCat, 
+    });
+   
+  $('#subcategory').select2({
+      placeholder: 'Select Subcategory',
+      width: '88.7%',
+      minimumResultsForSearch: 5, 
+      data: allCatfirstSelected, 
+    });
+
+  $('#supplier').select2({
+    placeholder: 'Select Supplier',
+    width: '87.4%',
+    minimumResultsForSearch: 5, 
+    data: allSupplier, 
+  });
+
+  $('#brand').select2({
+    placeholder: 'Select Brand',
+    width: '88.1%',
+    minimumResultsForSearch: 5, 
+    data:  allBrand, 
+  });
+    
+  $categorySelect.val('').trigger('change');
+  $('#subcategory').val('').trigger('change');
+  $('#supplier').val('').trigger('change');
+  $('#brand').val('').trigger('change');
+
+  $categorySelect.on("select2:selecting", function (e) { 
+    let subcategoryID = e.params.args.data.id;
+    let name = e.params.args.data.text;
+    $('#subcategory').html("");
+    
+    let allCatSub = getData(`?category&inv_list&where=WHERE \`subcategoryID\` ='${subcategoryID}' `, "inventory_category");
+    $('#subcategory').select2({
+      placeholder: `Select in ${name}`,
+      width: '88.7%',
+      minimumResultsForSearch: 5, 
+      data: allCatSub, 
+    });
+  });
+
+  var data = null;
+
+  var previewNode = document.querySelector("#template")
+  previewNode.id = ""
+  var previewTemplate = previewNode.parentNode.innerHTML
+  previewNode.parentNode.removeChild(previewNode)
+
+  let myDropzone = new Dropzone("div#actions", { 
+    url: local_address + "api/?upload&item_picture",
+    createImageThumbnails: true,
+    thumbnailWidth: 50,
+    thumbnailHeight: 50,
+    resizeWidth: 256,
+    maxFiles: 1,
+   // renameFile: renameFile,
+    clickable: ".fileinput-button",
+    previewTemplate: previewTemplate,
+    previewsContainer: "#previews",
+    autoProcessQueue: false
+  });
+
+  $("form#inventory_item_form").submit(function (e) {
+    e.preventDefault();
+    var form_submit = $(this);
+
+     data = {
+      name: form_submit[0].name.value,
+      category: form_submit[0].category.value,
+      subcategory: form_submit[0].subcategory.value,
+      supplier: form_submit[0].supplier.value,
+      brand: form_submit[0].brand.value,
+      model: form_submit[0].model.value,
+      in_stock: form_submit[0].in_stock.value,
+      minimum_stock_alert: form_submit[0].minimum_stock_alert.value,
+      buy_price: form_submit[0].buy_price.value,
+      sell_price: form_submit[0].sell_price.value,
+      description: form_submit[0].description.value,
+    };
+
+    $.ajax({
+    method: "POST",
+    url: local_address + "api/?inventory&items_insert",
+    // Passing all the variables
+    data: data,
+    }).done(function (msg) {
+      if (msg.includes("true")) {
+        myDropzone.processQueue();
+        loadTable();
+        $("#inventory_item_modal").modal("hide");
+        form_submit[0].reset();
+        toastr["success"]("Success adding item to the inventory");
+        debug(`Success adding item to the inventory`, "success");
+      } else {
+        console.log(msg);
+        toastr["error"]("Error adding item to the inventory");
+        debug(`Error adding item to the inventory`, "error");
+      }
+    });
+  });
+
+</script>

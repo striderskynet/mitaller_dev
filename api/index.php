@@ -18,6 +18,8 @@ if (array_keys($_GET)[0] == "users"  && array_keys($_GET)[1] == "verify")
         die("{Error:\":\"User not logged in, there is no client mode set}");*/
 
 $action = array_keys($_GET)[0];
+
+
 switch ($action) {
     case "users":
     case "clients":
@@ -27,6 +29,7 @@ switch ($action) {
     case "settings":
     case "sms":
     case "inventory":
+    case "upload":
         require_once($api_directory . "modules/{$action}.php");
         break;
 }

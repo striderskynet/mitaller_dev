@@ -5,7 +5,7 @@
       <div class="col-lg-3 col-6">
         <div class="small-box bg-info">
           <div class="inner">
-            <h3>150</h3>
+            <h3 id="data.tickets.newTask">{data.tickets.newTask}</h3>
             <p>New Tasks</p>
           </div>
           <div class="icon">
@@ -17,7 +17,7 @@
       <div class="col-lg-3 col-6">
         <div class="small-box bg-success">
           <div class="inner">
-            <h3>70<sup style="font-size: 20px">%</sup></h3>
+            <h3 id="data.tickets.newTaskCompletion">{data.tickets.newTaskCompletion}<sup style="font-size: 20px">%</sup></h3>
             <p>Completion Rate</p>
           </div>
           <div class="icon">
@@ -29,7 +29,7 @@
       <div class="col-lg-3 col-6">
         <div class="small-box bg-warning">
           <div class="inner">
-            <h3>44</h3>
+            <h3 id="data.clients.newClients">{data.clients.newClients}</h3>
             <p>New Clients</p>
           </div>
           <div class="icon">
@@ -41,7 +41,7 @@
       <div class="col-lg-3 col-6">
         <div class="small-box bg-primary">
           <div class="inner">
-            <h3>65</h3>
+            <h3>{sales_amount}</h3>
             <p>Ventas</p>
           </div>
           <div class="icon">
@@ -76,37 +76,6 @@
                 </div>
               </div>
               <div id="chart2" style="min-height: 250px; height: 250px; max-height: 250px; max-width: 100%; display: block; width: 764px" width="764" height="250" class="chartjs-render-monitor"></div>
-              <script>
-                var options = {
-                  series: [51, 82, 50, 13, 25],
-                  chart: {
-                    type: "donut",
-                  },
-                  labels: ["Paid", "Completed", "Pending", "Cancelled", "Registered"],
-                  stroke: {
-                    colors: ["#fff"],
-                  },
-                  fill: {
-                    opacity: 0.8,
-                  },
-                  responsive: [
-                    {
-                      breakpoint: 480,
-                      options: {
-                        chart: {
-                          width: 200,
-                        },
-                        legend: {
-                          position: "bottom",
-                        },
-                      },
-                    },
-                  ],
-                };
-
-                var chart = new ApexCharts(document.querySelector("#chart2"), options);
-                chart.render();
-              </script>
             </div>
           </div>
         </div>

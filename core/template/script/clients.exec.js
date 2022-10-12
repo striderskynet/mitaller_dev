@@ -32,19 +32,28 @@ $("#button_client_delete").click(function () {
 const avatarRenderer = (param) => {
   let name = param.data.name;
   name = name
-    .match(/(\b\S)?/g)
+    .match(/(\b[aA-zZ])?/g)
     .join("")
-    .match(/(^\S|\S$)?/g)
-    .join("")
+    /*.match(/(^\S|\S$)?/g)
+    .join("")*/
     .toUpperCase();
-
-  color = param.data.color;
 
   const parent_element = document.createElement("div");
   parent_element.classList.add("data-initials");
-  parent_element.dataset.initials = name;
-  parent_element.dataset.color = "#ff0000";
+  parent_element.innerHTML = name;
 
+  parent_element.style.backgroundColor = `rgba(${param.data.color}, 1)`;
+
+  return parent_element;
+};
+
+const clients_manage_render = (param) => {
+  const parent_element = document.createElement("p");
+  const element = document.createElement("span");
+  element.setAttribute("data-type", "tooltip");
+  element.setAttribute("title", "Modify");
+  element.innerHTML = `<button onclick='category_modify(${param.data.id})' class='btn btn-sm'><i class="fa text-primary fa-pencil-square" aria-hidden="true"></i></button>`;
+  parent_element.appendChild(element);
   return parent_element;
 };
 
@@ -73,7 +82,7 @@ const loadTable = () => {
         { field: "company", editable: true },
         { field: "address", editable: true },
         { field: "phone", editable: true },
-        { field: "manage" },
+        { field: "manage", cellRenderer: clients_manage_render, width: 60 },
       ];
 
       // specify the data
@@ -110,12 +119,25 @@ const loadTable = () => {
       gridDiv.innerHTML = "";
       new agGrid.Grid(gridDiv, gridOptions);
 
-      gridOptions.api.sizeColumnsToFit();
+      if (jQuery.browser.mobile == false) {
+        gridOptions.api.sizeColumnsToFit();
+      }
       gridDiv.style.setProperty("height", "81vh");
+
+      $("#clients_search").on("input", function () {
+        //console.log(this.value);
+        if (this.value.length >= 3) gridOptions.api.setQuickFilter(this.value);
+
+        if (this.value.length < 3) gridOptions.api.setQuickFilter("");
+      });
     } else {
       $("section#no_data").show();
       $("button#button_client_add").hide();
     }
+
+    $(function () {
+      $('[data-type="tooltip"]').tooltip();
+    });
   });
 };
 
@@ -123,34 +145,5 @@ loadTable();
 
 $("form#client_form").submit(function (e) {
   e.preventDefault();
-
-  var form_submit = $(this);
-
-  const client = {
-    name: form_submit[0].client_name.value,
-    company: form_submit[0].client_company.value,
-    address: form_submit[0].client_address.value,
-    phone: form_submit[0].client_phone.value,
-    email: form_submit[0].client_email.value,
-    info: form_submit[0].client_info.value,
-  };
-
-  $.ajax({
-    method: "POST",
-    url: "../../api/?clients&insert",
-    data: client,
-  }).done(function (msg) {
-    if (msg.includes("true")) {
-      //document.location = "./";
-      loadTable();
-      $("#clientmodal").modal("hide");
-      form_submit[0].reset();
-      toastr["success"]("Success adding client to the database");
-      debug(`Success adding client to the database`, "success");
-    } else {
-      console.log(msg);
-      toastr["error"]("Error adding client to the database");
-      debug(`Error adding client to the database`, "error");
-    }
-  });
+  form_submit("client", $(this));
 });

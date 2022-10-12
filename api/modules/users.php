@@ -52,6 +52,9 @@ function users_verify()
 
     if (count($result) > 0) {
         $_SESSION['USERID'] = $result['username'];
+        $_SESSION['USERNAME'] = $result['name'];
+        $_SESSION['USERNICK'] = $result['nickname'];
+        $_SESSION['USER_AVATAR'] = $result['avatar'];
         $_SESSION['SSID'] = $result['username'] . date("dd/mm/yy/");
         //$_SESSION['USER_ROLE'] = $result['role'];
         //$_SESSION['AVATAR'] = $result['avatar'];

@@ -1,2 +1,3 @@
 RewriteEngine on
 RewriteRule ^action/([A-Za-z]+)/$ index.php?$1&%{QUERY_STRING}
+RewriteRule ^action/([A-Za-z]+)/([A-Za-z]+)/$ index.php?$1&$2&%{QUERY_STRING}

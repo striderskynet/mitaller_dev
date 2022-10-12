@@ -58,6 +58,12 @@
                 <div class="input-group mb-3">
                   <input id="ticket_charge" name="ticket_charge" type="text" class="validate form-control" />
                   <span class="input-group-text"><i class="fa fa-dollar"></i></span>
+                  <select class="form-control" name="ticket_charge_coin">
+                    <option value="CUP">CUP</option>
+                    <option value="USD">USD</option>
+                    <option value="MLC">MLC</option>
+                  </select>
+                  <span class="input-group-text"><i class="fa fa-dollar"></i></span>
                 </div>
               </div>
             </div>
@@ -142,6 +148,7 @@
       ticket_id: ticket_status_form[0].ticket_client_id.value,
       update_status: ticket_status_form[0].ticket_status_change.value,
       update_charge: ticket_status_form[0].ticket_charge.value.replace("$", "").trim(),
+      update_charge_coin: ticket_status_form[0].ticket_charge_coin.value,
       update_comments: ticket_status_form[0].update_comments.value,
       update_user: logged_user,
     };

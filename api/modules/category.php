@@ -43,6 +43,7 @@ function category_query()
     global $db;
     $query =  $_POST['query'];
 
+    echo $query;
     if ($db->query($query)) return "true";
     else return "false";
 }
@@ -50,7 +51,13 @@ function category_query()
 function inventory_list()
 {
     global $db;
-    $query = 'SELECT * FROM `inventory_category` ORDER BY `subcategoryID`';
+
+    if (@array_keys($_GET)[2] == "where")
+        $where = $_GET[array_keys($_GET)[2]];
+    else $where = "";
+
+
+    $query = 'SELECT * FROM `inventory_category` ' . $where . ' ORDER BY `subcategoryID`';
     $data = $db->query($query)->fetchAll();
 
     header('Content-Type: application/json');

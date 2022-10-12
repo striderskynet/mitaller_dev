@@ -7,7 +7,7 @@ let category_data,
 $("#button_category_delete").click(function () {
   var delete_id = [];
   category_node.forEach(function (e) {
-    console.log(e.data);
+    //console.log(e.data);
     delete_id.push(e.data.categoryID);
   });
 
@@ -15,22 +15,21 @@ $("#button_category_delete").click(function () {
 
   $.ajax({
     method: "POST",
-    url: "../../api/?category&query",
+    url: local_address + "api/?category&query",
     // Passing all the variables
     data: { query: query },
   }).done(function (msg) {
-    apiCalls += 1;
     if (msg.includes("true")) {
       loadTable();
       $("#button_category_delete").addClass("d-none");
       toastr["success"]("Success removing categories from database");
-      debug(`Success removing tickets from database`, "success");
+      debug(`Success removing categories from database`, "success");
     } else {
       toastr["error"]("Error removing categories from database");
-      debug(`Error removing ticketsfrom database`, "error");
+      debug(`Error removingcategories from database`, "error");
     }
   });
-  console.log(query);
+  //console.log(query);
 });
 
 const avatarRenderer = (param) => {
@@ -40,12 +39,39 @@ const avatarRenderer = (param) => {
   return parent_element;
 };
 
+const category_logo_renderer = (param) => {
+  const parent_element = document.createElement("div");
+  const sub_element = document.createElement("img");
+
+  imageURL = local_address + `elements/images/components/inventory_category/${param.data.name}.png`;
+
+  //console.log(UrlExists(imageURL));
+  if (UrlExists(imageURL) == true) {
+    sub_element.src = imageURL;
+  } else {
+    sub_element.src = local_address + "elements/images/components/no_image.svg";
+  }
+
+  sub_element.width = "40";
+  parent_element.appendChild(sub_element);
+  parent_element.classList.add("inventory_item_grid_image");
+  return parent_element;
+};
+
+const category_manage_render = (param) => {
+  const parent_element = document.createElement("p");
+  const element = document.createElement("span");
+  element.innerHTML = `<button onclick='category_modify(${param.data.id})' class='btn btn-sm'><i class="fa  text-primary fa-pencil-square" aria-hidden="true"></i></button>`;
+  parent_element.appendChild(element);
+  return parent_element;
+};
+
 const loadTable = () => {
   let clients_count = 0;
 
   $.ajax({
     method: "GET",
-    url: "../../api/?category&inv_list",
+    url: local_address + "api/?category&inv_list",
   }).done(function (msg) {
     debug(`Loading client list from database`, "success");
     category_data = msg;
@@ -56,18 +82,19 @@ const loadTable = () => {
 
     //console.log(ordered_category_data);
 
-    clients_count = Object.keys(category_data).length;
+    category_count = Object.keys(category_data).length;
 
-    $("#client_count_badge").html(clients_count);
+    $("#category_count_badge").html(category_count);
     $("button#button_category_add").show();
 
-    if (clients_count > 0) {
+    if (category_count > 0) {
       const columnDefs = [
-        { field: "categoryID", headerCheckboxSelection: true, checkboxSelection: true, width: 150 },
-        { field: "subcategoryID", cellRenderer: avatarRenderer, width: 150 },
+        { field: "categoryID", headerCheckboxSelection: true, checkboxSelection: true, width: 100 },
+        { field: "subcategoryID", cellRenderer: avatarRenderer, width: 100 },
+        { field: "imagen", cellRenderer: category_logo_renderer },
         { field: "name" },
         { field: "description" },
-        { field: "manage", width: 150 },
+        { field: "manage", cellRenderer: category_manage_render, width: 50 },
       ];
 
       // specify the data
@@ -153,6 +180,7 @@ $("form#inventory_category_form").submit(function (e) {
     name: form_submit[0].name.value,
     subcategory: subcategory,
     description: form_submit[0].description.value,
+    logo: form_submit[0].description.value,
   };
 
   var query = "INSERT INTO `inventory_category` values (" + category.subcategory + ", null ,'" + category.name + "','" + category.description + "')";
@@ -160,10 +188,11 @@ $("form#inventory_category_form").submit(function (e) {
   //console.log(query);
   $.ajax({
     method: "POST",
-    url: "../../api/?category&query",
+    url: local_address + "api/?category&query",
     data: { query: query },
   }).done(function (msg) {
     if (msg.includes("true")) {
+      myDropzone.processQueue();
       loadTable();
       $("#inventory_category_modal").modal("hide");
       form_submit[0].reset();

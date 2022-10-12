@@ -12,18 +12,24 @@
 </body>
 
 <?php
-echo ("<script type=\"text/javascript\" src=\"http://" . $_SERVER['HTTP_HOST'] . "/core/script.php?js=main\" defer></script>\n");
-if (isset($theme_script)) echo ("<script type=\"text/javascript\" src=\"http://" . $_SERVER['HTTP_HOST'] . "/core/script.php?js=$theme_script\" defer></script>");
+if (isset($theme_script)) echo ("<script type=\"text/javascript\" src=\"http://" . $_SERVER['HTTP_HOST'] . "/core/script.php?js=$theme_script\"></script>");
 ?>
 
-<script>
+<script type="text/javascript" defer>
     $(function() {
         $('[data-type="tooltip"]').tooltip();
+        //$("body").overlayScrollbars({});
     });
 
+    $(document).ready(function() {
+        var t1 = new Date() - t0;
+        $("b#api_time_count").html(t1 / 1000);
+    });
 
-    var t1 = new Date() - t0;
-    $("b#api_time_count").html(t1 / 1000);
+    $(window).on("resize", function() {
+        loadTable();
+        //gridOptions.api.sizeColumnsToFit();
+    });
 </script>
 
 </html>
